@@ -1702,8 +1702,7 @@ int btrfs_subvol_snapshot_fd(int old_fd, const char *new_path, BtrfsSnapshotFlag
                 r = btrfs_subvol_make(new_path);
                 if (r == -ENOTTY && (flags & BTRFS_SNAPSHOT_FALLBACK_DIRECTORY)) {
                         /* If the destination doesn't support subvolumes, then use a plain directory, if that's requested. */
-                        if (mkdir(new_path, 0755) < 0)
-                                return r;
+                        (void) mkdir(new_path, 0755);
 
                         plain_directory = true;
                 } else if (r < 0)
